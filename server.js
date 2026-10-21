@@ -75,5 +75,5 @@ app.post('/api/servers/:id/worlds/restore',auth,(q,s)=>{
 });
 app.get('/api/health',(q,s)=>s.json({ok:true}));
 app.get('/api/diagnostics',(q,s)=>{const java=process.env.JAVA_BIN||'java';const check=spawnSync(java,['-version'],{encoding:'utf8',timeout:5000});const output=[check.stderr,check.stdout].filter(Boolean).join('\n').trim();s.json({ok:true,node:process.version,platform:process.platform,arch:process.arch,javaCommand:java,javaAvailable:!check.error&&check.status===0,javaVersion:output||null,javaError:check.error?check.error.message:(check.status===0?null:'Java command exited with code '+check.status),message:!check.error&&check.status===0?'Node and Java checks passed. This does not prove a Minecraft server JAR will start.':'Node panel is running, but Java is not available. Install a compatible Java runtime in Termux and restart the panel.'})});
-const host=process.env.HOST||'127.0.0.1';
+const host = '0.0.0.0';
 app.listen(port,host,()=>console.log('CraftServer listening on http://'+host+':'+port));
